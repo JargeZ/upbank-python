@@ -56,6 +56,7 @@ class AccountsApi:
     async def accounts_get(
         self,
         page_size: Annotated[Optional[StrictInt], Field(description="The number of records to return in each page. ")] = None,
+        page_after: Annotated[Optional[StrictStr], Field(description="The token to retrieve the next page in the results. ")] = None,
         filter_account_type: Annotated[Optional[AccountTypeEnum], Field(description="The type of account for which to return records. This can be used to filter Savers from spending accounts. ")] = None,
         filter_ownership_type: Annotated[Optional[OwnershipTypeEnum], Field(description="The account ownership structure for which to return records. This can be used to filter 2Up accounts from Up accounts. ")] = None,
         _request_timeout: Union[
@@ -77,6 +78,8 @@ class AccountsApi:
 
         :param page_size: The number of records to return in each page. 
         :type page_size: int
+        :param page_after: The token to retrieve the next page in the results. 
+        :type page_after: str
         :param filter_account_type: The type of account for which to return records. This can be used to filter Savers from spending accounts. 
         :type filter_account_type: AccountTypeEnum
         :param filter_ownership_type: The account ownership structure for which to return records. This can be used to filter 2Up accounts from Up accounts. 
@@ -105,6 +108,7 @@ class AccountsApi:
 
         _param = self._accounts_get_serialize(
             page_size=page_size,
+            page_after=page_after,
             filter_account_type=filter_account_type,
             filter_ownership_type=filter_ownership_type,
             _request_auth=_request_auth,
@@ -131,6 +135,7 @@ class AccountsApi:
     async def accounts_get_with_http_info(
         self,
         page_size: Annotated[Optional[StrictInt], Field(description="The number of records to return in each page. ")] = None,
+        page_after: Annotated[Optional[StrictStr], Field(description="The token to retrieve the next page in the results. ")] = None,
         filter_account_type: Annotated[Optional[AccountTypeEnum], Field(description="The type of account for which to return records. This can be used to filter Savers from spending accounts. ")] = None,
         filter_ownership_type: Annotated[Optional[OwnershipTypeEnum], Field(description="The account ownership structure for which to return records. This can be used to filter 2Up accounts from Up accounts. ")] = None,
         _request_timeout: Union[
@@ -152,6 +157,8 @@ class AccountsApi:
 
         :param page_size: The number of records to return in each page. 
         :type page_size: int
+        :param page_after: The token to retrieve the next page in the results. 
+        :type page_after: str
         :param filter_account_type: The type of account for which to return records. This can be used to filter Savers from spending accounts. 
         :type filter_account_type: AccountTypeEnum
         :param filter_ownership_type: The account ownership structure for which to return records. This can be used to filter 2Up accounts from Up accounts. 
@@ -180,6 +187,7 @@ class AccountsApi:
 
         _param = self._accounts_get_serialize(
             page_size=page_size,
+            page_after=page_after,
             filter_account_type=filter_account_type,
             filter_ownership_type=filter_ownership_type,
             _request_auth=_request_auth,
@@ -206,6 +214,7 @@ class AccountsApi:
     async def accounts_get_without_preload_content(
         self,
         page_size: Annotated[Optional[StrictInt], Field(description="The number of records to return in each page. ")] = None,
+        page_after: Annotated[Optional[StrictStr], Field(description="The token to retrieve the next page in the results. ")] = None,
         filter_account_type: Annotated[Optional[AccountTypeEnum], Field(description="The type of account for which to return records. This can be used to filter Savers from spending accounts. ")] = None,
         filter_ownership_type: Annotated[Optional[OwnershipTypeEnum], Field(description="The account ownership structure for which to return records. This can be used to filter 2Up accounts from Up accounts. ")] = None,
         _request_timeout: Union[
@@ -227,6 +236,8 @@ class AccountsApi:
 
         :param page_size: The number of records to return in each page. 
         :type page_size: int
+        :param page_after: The token to retrieve the next page in the results. 
+        :type page_after: str
         :param filter_account_type: The type of account for which to return records. This can be used to filter Savers from spending accounts. 
         :type filter_account_type: AccountTypeEnum
         :param filter_ownership_type: The account ownership structure for which to return records. This can be used to filter 2Up accounts from Up accounts. 
@@ -255,6 +266,7 @@ class AccountsApi:
 
         _param = self._accounts_get_serialize(
             page_size=page_size,
+            page_after=page_after,
             filter_account_type=filter_account_type,
             filter_ownership_type=filter_ownership_type,
             _request_auth=_request_auth,
@@ -276,6 +288,7 @@ class AccountsApi:
     def _accounts_get_serialize(
         self,
         page_size,
+        page_after,
         filter_account_type,
         filter_ownership_type,
         _request_auth,
@@ -301,6 +314,10 @@ class AccountsApi:
         if page_size is not None:
             
             _query_params.append(('page[size]', page_size))
+            
+        if page_after is not None:
+            
+            _query_params.append(('page[after]', page_after))
             
         if filter_account_type is not None:
             

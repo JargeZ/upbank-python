@@ -54,6 +54,7 @@ class TagsApi:
     async def tags_get(
         self,
         page_size: Annotated[Optional[StrictInt], Field(description="The number of records to return in each page. ")] = None,
+        page_after: Annotated[Optional[StrictStr], Field(description="The token to retrieve the next page in the results. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -73,6 +74,8 @@ class TagsApi:
 
         :param page_size: The number of records to return in each page. 
         :type page_size: int
+        :param page_after: The token to retrieve the next page in the results. 
+        :type page_after: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -97,6 +100,7 @@ class TagsApi:
 
         _param = self._tags_get_serialize(
             page_size=page_size,
+            page_after=page_after,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -121,6 +125,7 @@ class TagsApi:
     async def tags_get_with_http_info(
         self,
         page_size: Annotated[Optional[StrictInt], Field(description="The number of records to return in each page. ")] = None,
+        page_after: Annotated[Optional[StrictStr], Field(description="The token to retrieve the next page in the results. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -140,6 +145,8 @@ class TagsApi:
 
         :param page_size: The number of records to return in each page. 
         :type page_size: int
+        :param page_after: The token to retrieve the next page in the results. 
+        :type page_after: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -164,6 +171,7 @@ class TagsApi:
 
         _param = self._tags_get_serialize(
             page_size=page_size,
+            page_after=page_after,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -188,6 +196,7 @@ class TagsApi:
     async def tags_get_without_preload_content(
         self,
         page_size: Annotated[Optional[StrictInt], Field(description="The number of records to return in each page. ")] = None,
+        page_after: Annotated[Optional[StrictStr], Field(description="The token to retrieve the next page in the results. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -207,6 +216,8 @@ class TagsApi:
 
         :param page_size: The number of records to return in each page. 
         :type page_size: int
+        :param page_after: The token to retrieve the next page in the results. 
+        :type page_after: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -231,6 +242,7 @@ class TagsApi:
 
         _param = self._tags_get_serialize(
             page_size=page_size,
+            page_after=page_after,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -250,6 +262,7 @@ class TagsApi:
     def _tags_get_serialize(
         self,
         page_size,
+        page_after,
         _request_auth,
         _content_type,
         _headers,
@@ -273,6 +286,10 @@ class TagsApi:
         if page_size is not None:
             
             _query_params.append(('page[size]', page_size))
+            
+        if page_after is not None:
+            
+            _query_params.append(('page[after]', page_after))
             
         # process the header parameters
         # process the form parameters

@@ -58,6 +58,7 @@ class TransactionsApi:
         self,
         account_id: Annotated[StrictStr, Field(description="The unique identifier for the account. ")],
         page_size: Annotated[Optional[StrictInt], Field(description="The number of records to return in each page. ")] = None,
+        page_after: Annotated[Optional[StrictStr], Field(description="The token to retrieve the next page in the results. ")] = None,
         filter_status: Annotated[Optional[TransactionStatusEnum], Field(description="The transaction status for which to return records. This can be used to filter `HELD` transactions from those that are `SETTLED`. ")] = None,
         filter_since: Annotated[Optional[datetime], Field(description="The start date-time from which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. ")] = None,
         filter_until: Annotated[Optional[datetime], Field(description="The end date-time up to which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. ")] = None,
@@ -84,6 +85,8 @@ class TransactionsApi:
         :type account_id: str
         :param page_size: The number of records to return in each page. 
         :type page_size: int
+        :param page_after: The token to retrieve the next page in the results. 
+        :type page_after: str
         :param filter_status: The transaction status for which to return records. This can be used to filter `HELD` transactions from those that are `SETTLED`. 
         :type filter_status: TransactionStatusEnum
         :param filter_since: The start date-time from which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. 
@@ -119,6 +122,7 @@ class TransactionsApi:
         _param = self._accounts_account_id_transactions_get_serialize(
             account_id=account_id,
             page_size=page_size,
+            page_after=page_after,
             filter_status=filter_status,
             filter_since=filter_since,
             filter_until=filter_until,
@@ -149,6 +153,7 @@ class TransactionsApi:
         self,
         account_id: Annotated[StrictStr, Field(description="The unique identifier for the account. ")],
         page_size: Annotated[Optional[StrictInt], Field(description="The number of records to return in each page. ")] = None,
+        page_after: Annotated[Optional[StrictStr], Field(description="The token to retrieve the next page in the results. ")] = None,
         filter_status: Annotated[Optional[TransactionStatusEnum], Field(description="The transaction status for which to return records. This can be used to filter `HELD` transactions from those that are `SETTLED`. ")] = None,
         filter_since: Annotated[Optional[datetime], Field(description="The start date-time from which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. ")] = None,
         filter_until: Annotated[Optional[datetime], Field(description="The end date-time up to which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. ")] = None,
@@ -175,6 +180,8 @@ class TransactionsApi:
         :type account_id: str
         :param page_size: The number of records to return in each page. 
         :type page_size: int
+        :param page_after: The token to retrieve the next page in the results. 
+        :type page_after: str
         :param filter_status: The transaction status for which to return records. This can be used to filter `HELD` transactions from those that are `SETTLED`. 
         :type filter_status: TransactionStatusEnum
         :param filter_since: The start date-time from which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. 
@@ -210,6 +217,7 @@ class TransactionsApi:
         _param = self._accounts_account_id_transactions_get_serialize(
             account_id=account_id,
             page_size=page_size,
+            page_after=page_after,
             filter_status=filter_status,
             filter_since=filter_since,
             filter_until=filter_until,
@@ -240,6 +248,7 @@ class TransactionsApi:
         self,
         account_id: Annotated[StrictStr, Field(description="The unique identifier for the account. ")],
         page_size: Annotated[Optional[StrictInt], Field(description="The number of records to return in each page. ")] = None,
+        page_after: Annotated[Optional[StrictStr], Field(description="The token to retrieve the next page in the results. ")] = None,
         filter_status: Annotated[Optional[TransactionStatusEnum], Field(description="The transaction status for which to return records. This can be used to filter `HELD` transactions from those that are `SETTLED`. ")] = None,
         filter_since: Annotated[Optional[datetime], Field(description="The start date-time from which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. ")] = None,
         filter_until: Annotated[Optional[datetime], Field(description="The end date-time up to which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. ")] = None,
@@ -266,6 +275,8 @@ class TransactionsApi:
         :type account_id: str
         :param page_size: The number of records to return in each page. 
         :type page_size: int
+        :param page_after: The token to retrieve the next page in the results. 
+        :type page_after: str
         :param filter_status: The transaction status for which to return records. This can be used to filter `HELD` transactions from those that are `SETTLED`. 
         :type filter_status: TransactionStatusEnum
         :param filter_since: The start date-time from which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. 
@@ -301,6 +312,7 @@ class TransactionsApi:
         _param = self._accounts_account_id_transactions_get_serialize(
             account_id=account_id,
             page_size=page_size,
+            page_after=page_after,
             filter_status=filter_status,
             filter_since=filter_since,
             filter_until=filter_until,
@@ -326,6 +338,7 @@ class TransactionsApi:
         self,
         account_id,
         page_size,
+        page_after,
         filter_status,
         filter_since,
         filter_until,
@@ -356,6 +369,10 @@ class TransactionsApi:
         if page_size is not None:
             
             _query_params.append(('page[size]', page_size))
+            
+        if page_after is not None:
+            
+            _query_params.append(('page[after]', page_after))
             
         if filter_status is not None:
             
@@ -435,6 +452,7 @@ class TransactionsApi:
     async def transactions_get(
         self,
         page_size: Annotated[Optional[StrictInt], Field(description="The number of records to return in each page. ")] = None,
+        page_after: Annotated[Optional[StrictStr], Field(description="The token to retrieve the next page in the results. ")] = None,
         filter_status: Annotated[Optional[TransactionStatusEnum], Field(description="The transaction status for which to return records. This can be used to filter `HELD` transactions from those that are `SETTLED`. ")] = None,
         filter_since: Annotated[Optional[datetime], Field(description="The start date-time from which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. ")] = None,
         filter_until: Annotated[Optional[datetime], Field(description="The end date-time up to which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. ")] = None,
@@ -459,6 +477,8 @@ class TransactionsApi:
 
         :param page_size: The number of records to return in each page. 
         :type page_size: int
+        :param page_after: The token to retrieve the next page in the results. 
+        :type page_after: str
         :param filter_status: The transaction status for which to return records. This can be used to filter `HELD` transactions from those that are `SETTLED`. 
         :type filter_status: TransactionStatusEnum
         :param filter_since: The start date-time from which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. 
@@ -493,6 +513,7 @@ class TransactionsApi:
 
         _param = self._transactions_get_serialize(
             page_size=page_size,
+            page_after=page_after,
             filter_status=filter_status,
             filter_since=filter_since,
             filter_until=filter_until,
@@ -522,6 +543,7 @@ class TransactionsApi:
     async def transactions_get_with_http_info(
         self,
         page_size: Annotated[Optional[StrictInt], Field(description="The number of records to return in each page. ")] = None,
+        page_after: Annotated[Optional[StrictStr], Field(description="The token to retrieve the next page in the results. ")] = None,
         filter_status: Annotated[Optional[TransactionStatusEnum], Field(description="The transaction status for which to return records. This can be used to filter `HELD` transactions from those that are `SETTLED`. ")] = None,
         filter_since: Annotated[Optional[datetime], Field(description="The start date-time from which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. ")] = None,
         filter_until: Annotated[Optional[datetime], Field(description="The end date-time up to which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. ")] = None,
@@ -546,6 +568,8 @@ class TransactionsApi:
 
         :param page_size: The number of records to return in each page. 
         :type page_size: int
+        :param page_after: The token to retrieve the next page in the results. 
+        :type page_after: str
         :param filter_status: The transaction status for which to return records. This can be used to filter `HELD` transactions from those that are `SETTLED`. 
         :type filter_status: TransactionStatusEnum
         :param filter_since: The start date-time from which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. 
@@ -580,6 +604,7 @@ class TransactionsApi:
 
         _param = self._transactions_get_serialize(
             page_size=page_size,
+            page_after=page_after,
             filter_status=filter_status,
             filter_since=filter_since,
             filter_until=filter_until,
@@ -609,6 +634,7 @@ class TransactionsApi:
     async def transactions_get_without_preload_content(
         self,
         page_size: Annotated[Optional[StrictInt], Field(description="The number of records to return in each page. ")] = None,
+        page_after: Annotated[Optional[StrictStr], Field(description="The token to retrieve the next page in the results. ")] = None,
         filter_status: Annotated[Optional[TransactionStatusEnum], Field(description="The transaction status for which to return records. This can be used to filter `HELD` transactions from those that are `SETTLED`. ")] = None,
         filter_since: Annotated[Optional[datetime], Field(description="The start date-time from which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. ")] = None,
         filter_until: Annotated[Optional[datetime], Field(description="The end date-time up to which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. ")] = None,
@@ -633,6 +659,8 @@ class TransactionsApi:
 
         :param page_size: The number of records to return in each page. 
         :type page_size: int
+        :param page_after: The token to retrieve the next page in the results. 
+        :type page_after: str
         :param filter_status: The transaction status for which to return records. This can be used to filter `HELD` transactions from those that are `SETTLED`. 
         :type filter_status: TransactionStatusEnum
         :param filter_since: The start date-time from which to return records, formatted according to rfc-3339. Not to be used for pagination purposes. 
@@ -667,6 +695,7 @@ class TransactionsApi:
 
         _param = self._transactions_get_serialize(
             page_size=page_size,
+            page_after=page_after,
             filter_status=filter_status,
             filter_since=filter_since,
             filter_until=filter_until,
@@ -691,6 +720,7 @@ class TransactionsApi:
     def _transactions_get_serialize(
         self,
         page_size,
+        page_after,
         filter_status,
         filter_since,
         filter_until,
@@ -719,6 +749,10 @@ class TransactionsApi:
         if page_size is not None:
             
             _query_params.append(('page[size]', page_size))
+            
+        if page_after is not None:
+            
+            _query_params.append(('page[after]', page_after))
             
         if filter_status is not None:
             
