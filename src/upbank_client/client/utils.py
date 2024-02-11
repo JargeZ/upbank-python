@@ -2,17 +2,22 @@ import functools
 from typing import TypeVar, Callable, Any, Generic, ParamSpec
 
 from typing_extensions import Coroutine
+from urllib.parse import urlparse, parse_qs
 
 T_Retval = TypeVar("T_Retval")
 T_ParamSpec = ParamSpec("T_ParamSpec")
 T = TypeVar("T")
 
+def _extract_next_from_url(url: str) -> str:
+    parsed = urlparse(url)
+    query = parse_qs(parsed.query)
+    return query['page[after]'][0]
 
 class Paginator(Generic[T_Retval]):
     def __init__(
         self,
         func: Callable[[T_ParamSpec], Coroutine[Any, Any, T]],
-        *args: T_ParamSpec,
+        *args: T_ParamSpec.args,
         **kwargs: T_ParamSpec.kwargs,
     ):
         self.func = func
@@ -27,9 +32,13 @@ class Paginator(Generic[T_Retval]):
     async def __anext__(self) -> T_Retval:
         if self.last_page is not None and self.page > self.last_page:
             raise StopAsyncIteration
-        response = await self.func(*self.args, page=self.page, **self.kwargs)
+        response = await self.func(
+            *self.args,
+            page=self.page,
+            **self.kwargs
+        )
         self.page += 1
-        self.last_page = response.meta.total_pages
+        self.next_from = _extract_next_from_url(response.links.next)
         return response
 
 # FIXME: types drops in some cases (pycharm?)

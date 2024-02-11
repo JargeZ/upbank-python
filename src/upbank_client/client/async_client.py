@@ -1,9 +1,7 @@
 from typing import Optional, AsyncGenerator
 
-from au_open_banking_client.api_wrapped import AsyncApiBundle
-from au_open_banking_client.client.utils import paginate
-from au_open_banking_spec import BankingProductCategory, BankingProductV4
-
+from upbank_client.api_wrapped import AsyncApiBundle
+from upbank_client.client.utils import paginate
 
 class AsyncClient:
     api: AsyncApiBundle
@@ -11,11 +9,11 @@ class AsyncClient:
     def __init__(self, api: AsyncApiBundle):
         self.api = api
 
-    async def get_all_products(
+    async def get_all_transactions(
         self, product_category: Optional[BankingProductCategory] = None, batch_size: int = 100
     ) -> AsyncGenerator[BankingProductV4, None]:
 
-        paginator = paginate(self.api.products.list_products)(
+        paginator = paginate(self.api.transactions.transactions_get)(
             product_category=product_category,
             page_size=batch_size,
         )
@@ -24,3 +22,4 @@ class AsyncClient:
             for product in page.data.products:
                 yield product
 
+a = URL()
