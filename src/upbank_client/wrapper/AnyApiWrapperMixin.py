@@ -7,6 +7,7 @@ def decorate(f):
 
 class AnyApiWrapperMixin:
     ...
+
     def __getattribute__(self, name):
         result = super(AnyApiWrapperMixin, self).__getattribute__(name)
 
