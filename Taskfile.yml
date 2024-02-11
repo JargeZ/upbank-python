@@ -1,29 +1,38 @@
 version: '3'
+# TODO: abstract package name
 
 tasks:
   getspec:
     cmds:
-      - wget -O ./cds_banking.yaml https://consumerdatastandardsaustralia.github.io/standards/includes/swagger/cds_banking.yaml
-      - diff -u ./cds_banking.yaml ./contract-patches/Make_version_optional.patch || true
-      - patch -u -b ./cds_banking.yaml -i ./contract-patches/Make_version_optional.patch
+      - wget -O ./openapi.json https://raw.githubusercontent.com/up-banking/api/master/v1/openapi.json
+
+      # if spec is json, convert to yaml
+      - | 
+        docker run --rm \
+        -v $PWD:/src \
+        mikefarah/yq:4 \
+        -p json /src/openapi.json \
+        -o yaml > ./openapi.yaml
+      - rm ./openapi.json
+
+      - diff -u ./openapi.yaml ./contract-patches/Add_page-after_field.patch || true
+      - patch -u -b ./openapi.yaml -i ./contract-patches/Add_page-after_field.patch
     silent: true
 
   buildspec:
     cmds:
       - | 
         docker run --rm \
-        -v $PWD/cds_banking.yaml:/openapi.yaml:ro \
+        -v $PWD/openapi.yaml:/openapi.yaml:ro \
         -v $PWD/spec/:/spec \
-        openapitools/openapi-generator-cli:v7.3.0 generate \
+        openapitools/openapi-generator-cli:v7.2.0 generate \
         -i /openapi.yaml \
         -g python \
         -o /spec \
-        --package-name au_open_banking_spec \
+        --package-name upbank_spec \
         --additional-properties=generateSourceCodeOnly=false \
-        --additional-properties=packageName=au_open_banking_spec \
+        --additional-properties=packageName=upbank_spec \
         --additional-properties=library=asyncio
-#      - |
-#        sed -i -r 's/(x_v: Annotated\[)StrictStr(, Field\(description=".*"\)\]),/\1Optional[StrictStr]\2,/g' spec/au_open_banking_spec/api/*.py
     silent: true
     desc: Builds the CDS Banking API client
 
@@ -32,3 +41,13 @@ tasks:
       - poetry run mypy src/
       - poetry run black src/
       - poetry run flake8 src/
+
+  replacemodels:
+    cmds:
+      - sed -n '/import models into model package/,$p' spec/upbank_spec/models/__init__.py > all_imports.txt
+      - sed -i '/BEGIN/,/END/{//!d}' src/upbank_client/models/__init__.py
+      - sed -i '/BEGIN/r all_imports.txt' src/upbank_client/models/__init__.py
+      - sed -i -E 's/upbank_spec\.models\.[a-zA-Z0-9_]+/upbank_client.models/g' spec/upbank_spec/api/*.py
+
+  updateall:
+    deps: [ getspec, buildspec, replacemodels ]
