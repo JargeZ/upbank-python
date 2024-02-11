@@ -13,6 +13,7 @@ tasks:
         mikefarah/yq:4 \
         -p json /src/openapi.json \
         -o yaml > ./openapi.yaml
+
       - rm ./openapi.json
 
       - diff -u ./openapi.yaml ./contract-patches/Add_page-after_field.patch || true

@@ -1,4 +1,4 @@
-from upbank_spec.models import MoneyObject as OriginalMoneyObject
+from upbank_spec.models.money_object import MoneyObject as OriginalMoneyObject
 
 
 class MoneyObject(OriginalMoneyObject):

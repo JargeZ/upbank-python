@@ -1,8 +1,12 @@
-def decorate(f):
-    def wrapper(*args, **kwargs):
+from functools import wraps
+
+
+def decorate_api_call(f):
+    @wraps(f)
+    def call_wrapper(*args, **kwargs):
         return f(*args, **kwargs)
 
-    return wrapper
+    return call_wrapper
 
 
 class AnyApiWrapperMixin:
@@ -16,4 +20,4 @@ class AnyApiWrapperMixin:
         }:
             return result
 
-        return decorate(result)
+        return decorate_api_call(result)

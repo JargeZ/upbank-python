@@ -24,7 +24,7 @@ class Paginator(Generic[T_Retval]):
         self.func = func
         self.args = args
         self.kwargs = kwargs
-        self.next_from = Optional[str]
+        self.next_from: Optional[str] = None
 
     def __aiter__(self):
         return self
