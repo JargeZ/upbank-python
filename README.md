@@ -1,6 +1,7 @@
-# Australian CDS Open Banking Client
-This is a client library for the Australian CDS Open Banking API. It is handy wrapper from the OpenAPI specification.
-It provides a simple way to interact with the API using either sync or async clients.
+# UpBank client
+This project is a collection of experience and an attempt to make a fully typed extensible asynchronous library based on generated openapi models with a subsequent abstraction perspective for any api 
+
+based on [JargeZ/au-open-banking-client](https://github.com/JargeZ/au-open-banking-client)
 
 ---
 ### ⚠️ DRAFT warning
@@ -11,28 +12,26 @@ This project will probably not be maintained, but serves as a basis for creating
 You can use endpoints directly
 
 ```python
-from au_open_banking_client.api_wrapped import AsyncApiBundle
-from au_open_banking_client.client.async_client import AsyncClient
-from au_open_banking_client.schemas.BankEndpoint import KnownBankHost
-from au_open_banking_spec import Configuration, ApiClient
+from upbank_client.client.async_client import AsyncClient
 
-configuration = Configuration(
-    host=KnownBankHost.COMMBANK.value
-)
+client = AsyncClient() # token from env: UPBANK_TOKEN
+client = AsyncClient(token="up:demo:Yj3rbF53jhwj") # token directly
 
-client = AsyncClient(AsyncApiBundle(ApiClient(configuration)))
-
-await cl.api.products.get_product_detail(product_id="id")
+await client.api.transactions.transactions_id_get("{uuid}")
 ```
 
 OR with some wrappers\
 (you can also inherit and add you own helper methods)
 
 ```python
-async for product in client.get_all_products():
-    print(f"{product.name} -  {product.application_uri}")
+async for transaction in client.get_all_transactions():
+    details = await client.get_transaction_details(transaction.id)
+    print(f"\n\n"
+          f"- {transaction.attributes.description} -\n"
+          f"| {transaction.attributes.amount.value} {transaction.attributes.amount.currency_code}\n"
+          f"| {details.json()}")
 ```
-
+---
 go-task install (modern make replacement)
 ```shell
 # macOS
@@ -46,9 +45,9 @@ npm install -g @go-task/cli
 # + reffer to https://taskfile.dev/#/installation
 ```
 
-### CDS open Banking Client
-https://consumerdatastandardsaustralia.github.io/standards/includes/swagger/cds_banking.yaml
-
-
-### TODO:
-- [ ] sync/async client factory
+### Problems and TODOs:
+- [x] Automatic generation and tailoring
+- [x] Transparent models overwriting
+- [ ] Nested models overwriting
+- [ ] Session management wrapping
+- [ ] sync client as wrapped async

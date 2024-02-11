@@ -11,7 +11,6 @@ async def test_get_all_products():
 
     async for trx in cl.get_all_transactions():
         details = await cl.get_transaction_details(trx.id)
-        details.attributes.amount
         print(f"\n\n"
               f"- {trx.attributes.description} -\n"
               f"| {trx.attributes.amount.value} {trx.attributes.amount.currency_code}\n"
