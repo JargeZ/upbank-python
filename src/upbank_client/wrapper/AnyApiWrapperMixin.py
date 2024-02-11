@@ -1,6 +1,5 @@
 def decorate(f):
     def wrapper(*args, **kwargs):
-        kwargs.update({"x_v": "3"})
         return f(*args, **kwargs)
 
     return wrapper
