@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **webhooks_get**
-> ListWebhooksResponse webhooks_get(page_size=page_size)
+> ListWebhooksResponse webhooks_get(page_size=page_size, page_after=page_after)
 
 List webhooks
 
@@ -52,10 +52,11 @@ async with upbank_spec.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = upbank_spec.WebhooksApi(api_client)
     page_size = 30 # int | The number of records to return in each page.  (optional)
+    page_after = 'WyIyMDI0LTAyLTA5VDAxOjA3OjU5LjYwMzk0OTAwMFoiLCJiNDBlMWYzMS00ZGFjLTQ0MzItYjIwMy04MjFjNmRhZTA1M2MiXQ==' # str | The token to retrieve the next page in the results.  (optional)
 
     try:
         # List webhooks
-        api_response = await api_instance.webhooks_get(page_size=page_size)
+        api_response = await api_instance.webhooks_get(page_size=page_size, page_after=page_after)
         print("The response of WebhooksApi->webhooks_get:\n")
         pprint(api_response)
     except Exception as e:
@@ -70,6 +71,7 @@ async with upbank_spec.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **page_size** | **int**| The number of records to return in each page.  | [optional] 
+ **page_after** | **str**| The token to retrieve the next page in the results.  | [optional] 
 
 ### Return type
 
@@ -331,7 +333,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **webhooks_webhook_id_logs_get**
-> ListWebhookDeliveryLogsResponse webhooks_webhook_id_logs_get(webhook_id, page_size=page_size)
+> ListWebhookDeliveryLogsResponse webhooks_webhook_id_logs_get(webhook_id, page_size=page_size, page_after=page_after)
 
 List webhook logs
 
@@ -371,10 +373,11 @@ async with upbank_spec.ApiClient(configuration) as api_client:
     api_instance = upbank_spec.WebhooksApi(api_client)
     webhook_id = '7104f5df-4993-495f-9d29-2b4d062c03a9' # str | The unique identifier for the webhook. 
     page_size = 30 # int | The number of records to return in each page.  (optional)
+    page_after = 'WyIyMDI0LTAyLTA5VDAxOjA3OjU5LjYwMzk0OTAwMFoiLCJiNDBlMWYzMS00ZGFjLTQ0MzItYjIwMy04MjFjNmRhZTA1M2MiXQ==' # str | The token to retrieve the next page in the results.  (optional)
 
     try:
         # List webhook logs
-        api_response = await api_instance.webhooks_webhook_id_logs_get(webhook_id, page_size=page_size)
+        api_response = await api_instance.webhooks_webhook_id_logs_get(webhook_id, page_size=page_size, page_after=page_after)
         print("The response of WebhooksApi->webhooks_webhook_id_logs_get:\n")
         pprint(api_response)
     except Exception as e:
@@ -390,6 +393,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **webhook_id** | **str**| The unique identifier for the webhook.  | 
  **page_size** | **int**| The number of records to return in each page.  | [optional] 
+ **page_after** | **str**| The token to retrieve the next page in the results.  | [optional] 
 
 ### Return type
 

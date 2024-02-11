@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **accounts_get**
-> ListAccountsResponse accounts_get(page_size=page_size, filter_account_type=filter_account_type, filter_ownership_type=filter_ownership_type)
+> ListAccountsResponse accounts_get(page_size=page_size, page_after=page_after, filter_account_type=filter_account_type, filter_ownership_type=filter_ownership_type)
 
 List accounts
 
@@ -50,12 +50,13 @@ async with upbank_spec.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = upbank_spec.AccountsApi(api_client)
     page_size = 30 # int | The number of records to return in each page.  (optional)
+    page_after = 'WyIyMDI0LTAyLTA5VDAxOjA3OjU5LjYwMzk0OTAwMFoiLCJiNDBlMWYzMS00ZGFjLTQ0MzItYjIwMy04MjFjNmRhZTA1M2MiXQ==' # str | The token to retrieve the next page in the results.  (optional)
     filter_account_type = upbank_spec.AccountTypeEnum() # AccountTypeEnum | The type of account for which to return records. This can be used to filter Savers from spending accounts.  (optional)
     filter_ownership_type = upbank_spec.OwnershipTypeEnum() # OwnershipTypeEnum | The account ownership structure for which to return records. This can be used to filter 2Up accounts from Up accounts.  (optional)
 
     try:
         # List accounts
-        api_response = await api_instance.accounts_get(page_size=page_size, filter_account_type=filter_account_type, filter_ownership_type=filter_ownership_type)
+        api_response = await api_instance.accounts_get(page_size=page_size, page_after=page_after, filter_account_type=filter_account_type, filter_ownership_type=filter_ownership_type)
         print("The response of AccountsApi->accounts_get:\n")
         pprint(api_response)
     except Exception as e:
@@ -70,6 +71,7 @@ async with upbank_spec.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **page_size** | **int**| The number of records to return in each page.  | [optional] 
+ **page_after** | **str**| The token to retrieve the next page in the results.  | [optional] 
  **filter_account_type** | [**AccountTypeEnum**](.md)| The type of account for which to return records. This can be used to filter Savers from spending accounts.  | [optional] 
  **filter_ownership_type** | [**OwnershipTypeEnum**](.md)| The account ownership structure for which to return records. This can be used to filter 2Up accounts from Up accounts.  | [optional] 
 

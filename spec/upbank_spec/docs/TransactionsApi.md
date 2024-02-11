@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 
 # **accounts_account_id_transactions_get**
-> ListTransactionsResponse accounts_account_id_transactions_get(account_id, page_size=page_size, filter_status=filter_status, filter_since=filter_since, filter_until=filter_until, filter_category=filter_category, filter_tag=filter_tag)
+> ListTransactionsResponse accounts_account_id_transactions_get(account_id, page_size=page_size, page_after=page_after, filter_status=filter_status, filter_since=filter_since, filter_until=filter_until, filter_category=filter_category, filter_tag=filter_tag)
 
 List transactions by account
 
@@ -51,6 +51,7 @@ async with upbank_spec.ApiClient(configuration) as api_client:
     api_instance = upbank_spec.TransactionsApi(api_client)
     account_id = 'b5544658-4bbd-4eb1-8f63-a9909e0f564b' # str | The unique identifier for the account. 
     page_size = 30 # int | The number of records to return in each page.  (optional)
+    page_after = 'WyIyMDI0LTAyLTA5VDAxOjA3OjU5LjYwMzk0OTAwMFoiLCJiNDBlMWYzMS00ZGFjLTQ0MzItYjIwMy04MjFjNmRhZTA1M2MiXQ==' # str | The token to retrieve the next page in the results.  (optional)
     filter_status = upbank_spec.TransactionStatusEnum() # TransactionStatusEnum | The transaction status for which to return records. This can be used to filter `HELD` transactions from those that are `SETTLED`.  (optional)
     filter_since = '2020-01-01T01:02:03+10:00' # datetime | The start date-time from which to return records, formatted according to rfc-3339. Not to be used for pagination purposes.  (optional)
     filter_until = '2020-02-01T01:02:03+10:00' # datetime | The end date-time up to which to return records, formatted according to rfc-3339. Not to be used for pagination purposes.  (optional)
@@ -59,7 +60,7 @@ async with upbank_spec.ApiClient(configuration) as api_client:
 
     try:
         # List transactions by account
-        api_response = await api_instance.accounts_account_id_transactions_get(account_id, page_size=page_size, filter_status=filter_status, filter_since=filter_since, filter_until=filter_until, filter_category=filter_category, filter_tag=filter_tag)
+        api_response = await api_instance.accounts_account_id_transactions_get(account_id, page_size=page_size, page_after=page_after, filter_status=filter_status, filter_since=filter_since, filter_until=filter_until, filter_category=filter_category, filter_tag=filter_tag)
         print("The response of TransactionsApi->accounts_account_id_transactions_get:\n")
         pprint(api_response)
     except Exception as e:
@@ -75,6 +76,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| The unique identifier for the account.  | 
  **page_size** | **int**| The number of records to return in each page.  | [optional] 
+ **page_after** | **str**| The token to retrieve the next page in the results.  | [optional] 
  **filter_status** | [**TransactionStatusEnum**](.md)| The transaction status for which to return records. This can be used to filter &#x60;HELD&#x60; transactions from those that are &#x60;SETTLED&#x60;.  | [optional] 
  **filter_since** | **datetime**| The start date-time from which to return records, formatted according to rfc-3339. Not to be used for pagination purposes.  | [optional] 
  **filter_until** | **datetime**| The end date-time up to which to return records, formatted according to rfc-3339. Not to be used for pagination purposes.  | [optional] 
@@ -103,7 +105,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **transactions_get**
-> ListTransactionsResponse transactions_get(page_size=page_size, filter_status=filter_status, filter_since=filter_since, filter_until=filter_until, filter_category=filter_category, filter_tag=filter_tag)
+> ListTransactionsResponse transactions_get(page_size=page_size, page_after=page_after, filter_status=filter_status, filter_since=filter_since, filter_until=filter_until, filter_category=filter_category, filter_tag=filter_tag)
 
 List transactions
 
@@ -143,6 +145,7 @@ async with upbank_spec.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = upbank_spec.TransactionsApi(api_client)
     page_size = 30 # int | The number of records to return in each page.  (optional)
+    page_after = 'WyIyMDI0LTAyLTA5VDAxOjA3OjU5LjYwMzk0OTAwMFoiLCJiNDBlMWYzMS00ZGFjLTQ0MzItYjIwMy04MjFjNmRhZTA1M2MiXQ==' # str | The token to retrieve the next page in the results.  (optional)
     filter_status = upbank_spec.TransactionStatusEnum() # TransactionStatusEnum | The transaction status for which to return records. This can be used to filter `HELD` transactions from those that are `SETTLED`.  (optional)
     filter_since = '2020-01-01T01:02:03+10:00' # datetime | The start date-time from which to return records, formatted according to rfc-3339. Not to be used for pagination purposes.  (optional)
     filter_until = '2020-02-01T01:02:03+10:00' # datetime | The end date-time up to which to return records, formatted according to rfc-3339. Not to be used for pagination purposes.  (optional)
@@ -151,7 +154,7 @@ async with upbank_spec.ApiClient(configuration) as api_client:
 
     try:
         # List transactions
-        api_response = await api_instance.transactions_get(page_size=page_size, filter_status=filter_status, filter_since=filter_since, filter_until=filter_until, filter_category=filter_category, filter_tag=filter_tag)
+        api_response = await api_instance.transactions_get(page_size=page_size, page_after=page_after, filter_status=filter_status, filter_since=filter_since, filter_until=filter_until, filter_category=filter_category, filter_tag=filter_tag)
         print("The response of TransactionsApi->transactions_get:\n")
         pprint(api_response)
     except Exception as e:
@@ -166,6 +169,7 @@ async with upbank_spec.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **page_size** | **int**| The number of records to return in each page.  | [optional] 
+ **page_after** | **str**| The token to retrieve the next page in the results.  | [optional] 
  **filter_status** | [**TransactionStatusEnum**](.md)| The transaction status for which to return records. This can be used to filter &#x60;HELD&#x60; transactions from those that are &#x60;SETTLED&#x60;.  | [optional] 
  **filter_since** | **datetime**| The start date-time from which to return records, formatted according to rfc-3339. Not to be used for pagination purposes.  | [optional] 
  **filter_until** | **datetime**| The end date-time up to which to return records, formatted according to rfc-3339. Not to be used for pagination purposes.  | [optional] 

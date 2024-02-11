@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 
 # **tags_get**
-> ListTagsResponse tags_get(page_size=page_size)
+> ListTagsResponse tags_get(page_size=page_size, page_after=page_after)
 
 List tags
 
@@ -49,10 +49,11 @@ async with upbank_spec.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = upbank_spec.TagsApi(api_client)
     page_size = 50 # int | The number of records to return in each page.  (optional)
+    page_after = 'WyIyMDI0LTAyLTA5VDAxOjA3OjU5LjYwMzk0OTAwMFoiLCJiNDBlMWYzMS00ZGFjLTQ0MzItYjIwMy04MjFjNmRhZTA1M2MiXQ==' # str | The token to retrieve the next page in the results.  (optional)
 
     try:
         # List tags
-        api_response = await api_instance.tags_get(page_size=page_size)
+        api_response = await api_instance.tags_get(page_size=page_size, page_after=page_after)
         print("The response of TagsApi->tags_get:\n")
         pprint(api_response)
     except Exception as e:
@@ -67,6 +68,7 @@ async with upbank_spec.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **page_size** | **int**| The number of records to return in each page.  | [optional] 
+ **page_after** | **str**| The token to retrieve the next page in the results.  | [optional] 
 
 ### Return type
 
